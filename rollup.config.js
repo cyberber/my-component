@@ -49,4 +49,3 @@ const config = {
 };
 
 export default config
-git config --global user.name "Your Username"
