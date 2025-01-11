@@ -1,30 +1,38 @@
+/*
+ * @Author: cyberber 978265004@qq.com
+ * @Date: 2024-07-24 22:55:00
+ * @LastEditors: cyberber 978265004@qq.com
+ * @LastEditTime: 2025-01-06 14:21:00
+ * @FilePath: /my-component/rollup.config.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
-import typescript from "rollup-plugin-typescript2"; // 打包typeScript的插件
-// import sass from "rollup-plugin-sass";
+import typescript from "rollup-plugin-typescript2";
 import commonjs from "@rollup/plugin-commonjs";
-// import babel from "@rollup/plugin-babel";
-import postcss from "rollup-plugin-postcss"
-import sass from "sass"
-
+import postcss from "rollup-plugin-postcss";
+import sass from "sass";
 
 const processScss = function (context) {
   return new Promise((resolve, reject) => {
-    sass.compile({ file: context }, (err, result) => {
-      err ? reject(result) : resolve(reject)
-    })
-  })
-}
-
-const overrides = {
-  compilerOptions: { declaration: true },
+    sass.render(
+      {
+        file: context,
+        includePaths: ["src/styles"],
+      },
+      (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result.css);
+        }
+      }
+    );
+  });
 };
 
-// const babelOptions = {
-//   presets: ["@babel/preset-env"],
-//   extensions: [".js", ".jsx", ".ts", ".tsx", ".scss"],
-//   exclude: "**/node_modules/**",
-// };
+const external = ["react", "react-dom", "react/jsx-runtime", "classnames"];
+
 const config = {
   input: "src/index.tsx",
   output: [
@@ -32,20 +40,31 @@ const config = {
       dir: "dist/",
       format: "es",
       preserveModules: true,
+      globals: {
+        react: "React",
+        "react-dom": "ReactDOM",
+      },
     },
   ],
-    plugins: [
+  external,
+  plugins: [
     nodeResolve(),
-    // sass(),
     commonjs(),
-    // babel(babelOptions),
     json(),
-    typescript(),
+    typescript({
+      tsconfig: "./tsconfig.json",
+      tsconfigOverride: {
+        exclude: ["**/__tests__/**"],
+      },
+    }),
     postcss({
       extract: true,
+      modules: true,
+      use: ["sass"],
       process: processScss,
+      extensions: [".css", ".scss"],
     }),
   ],
 };
 
-export default config
+export default config;

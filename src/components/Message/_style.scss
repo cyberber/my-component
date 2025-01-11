@@ -1,0 +1,44 @@
+.viking-message {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  display: flex;
+  align-items: center;
+
+  &-container {
+    position: fixed;
+    top: 20px;
+    left: 0;
+    right: 0;
+    z-index: 1010;
+  }
+
+  &-content {
+    padding: 0 10px;
+  }
+
+  &-info {
+    border: 1px solid $primary;
+    color: $primary;
+  }
+
+  &-success {
+    border: 1px solid $success;
+    color: $success;
+  }
+
+  &-warning {
+    border: 1px solid $warning;
+    color: $warning;
+  }
+
+  &-error {
+    border: 1px solid $danger;
+    color: $danger;
+  }
+}
