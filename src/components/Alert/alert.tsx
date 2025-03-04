@@ -2,7 +2,7 @@
  * @Author: cyberber 978265004@qq.com
  * @Date: 2025-01-02 15:05:59
  * @LastEditors: cyberber 978265004@qq.com
- * @LastEditTime: 2025-01-09 16:28:04
+ * @LastEditTime: 2025-01-11 21:34:15
  * @FilePath: /my-component/src/components/Alert/alert.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -25,10 +25,10 @@ interface AlertProps {
 }
 
 const Alert: FC<AlertProps> = (props) => {
-  const { title, description, onClose, icon, type, closeable } = props;
-  const classes = classNames("viking-alert", {
-    [`viking-alert-${type}`]: type,
-  });
+  // const { title, description, onClose, icon, type, closeable } = props;
+  // const classes = classNames("viking-alert", {
+  //   [`viking-alert-${type}`]: type,
+  // });
   return <div></div>;
 };
 
